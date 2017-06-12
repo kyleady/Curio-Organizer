@@ -46,14 +46,14 @@ for COCollectionName,COCollection in pairs(CurioTable.Collections) do
 			if COSet[&quot;Rare&quot;].count == 1 then
 				--if we just have one, color it the normal gray
 				--show we have one, with a tooltop of the piece name, and a link that searches for that piece
-				cechoLink(&quot;1&quot;,[[send(&quot;curio list all ]] .. COSet[&quot;Rare&quot;].name ..  [[&quot;,false)]],COSet[&quot;Rare&quot;].name,true)
+				cechoLink(&quot;1&quot;,[[send(&quot;curio list all ]] .. COSet[&quot;Rare&quot;].name ..  [[&quot;,false)send(&quot;CURIOMARKET SHOW BUY PIECE ]] .. COSet[&quot;Rare&quot;].name .. [[&quot;)]],COSet[&quot;Rare&quot;].name,true)
 			
 				--create some space between this entry and the next entry
 				echo(&quot;  &quot;)
 			elseif COSet[&quot;Rare&quot;].count &gt; 1 and COSet[&quot;Rare&quot;].count &lt; 100 then
 				--if we have spares to share, color it green
 				--show how many we have, with a tooltop of the piece name, and a link that searches for that piece
-				cechoLink(&quot;&lt;green&gt;&quot; .. COSet[&quot;Rare&quot;].count,[[send(&quot;curio list all ]] .. COSet[&quot;Rare&quot;].name ..  [[&quot;,false)]],COSet[&quot;Rare&quot;].name,true)
+				cechoLink(&quot;&lt;green&gt;&quot; .. COSet[&quot;Rare&quot;].count,[[send(&quot;curio list all ]] .. COSet[&quot;Rare&quot;].name ..  [[&quot;,false)send(&quot;CURIOMARKET SHOW BUY PIECE ]] .. COSet[&quot;Rare&quot;].name .. [[&quot;)]],COSet[&quot;Rare&quot;].name,true)
 				
 				--create some space between this entry and the next entry
 				--two digit numbers need one space
@@ -67,7 +67,7 @@ for COCollectionName,COCollection in pairs(CurioTable.Collections) do
 				--you have more than 99 of this curio somehow
 				--show that this number is too big to display
 				--still has a tooltip with the piece's name and gives a link to search for the pieces
-				cechoLink(&quot;#&quot;,[[send(&quot;curio list all ]] .. COSet[&quot;Rare&quot;].name ..  [[&quot;,false)]],COSet[&quot;Rare&quot;].name,true)
+				cechoLink(&quot;#&quot;,[[send(&quot;curio list all ]] .. COSet[&quot;Rare&quot;].name ..  [[&quot;,false)send(&quot;CURIOMARKET SHOW BUY PIECE ]] .. COSet[&quot;Rare&quot;].name .. [[&quot;)]],COSet[&quot;Rare&quot;].name,true)
 				
 				--create some space between this entry and the next entry
 				echo(&quot;  &quot;)
@@ -91,14 +91,14 @@ for COCollectionName,COCollection in pairs(CurioTable.Collections) do
 				if COPiece.count == 1 then
 					--if we just have one, color it the normal gray
 					--show we have one, with a tooltop of the piece name, and a link that searches for that piece
-					cechoLink(&quot;1&quot;,[[send(&quot;curio list all ]] .. COPieceName ..  [[&quot;,false)]],COPieceName,true)
+					cechoLink(&quot;1&quot;,[[send(&quot;curio list all ]] .. COPieceName ..  [[&quot;,false)send(&quot;CURIOMARKET SHOW BUY PIECE ]] .. COPieceName .. [[&quot;)]],COPieceName,true)
 				
 					--create some space between this entry and the next entry
 					echo(&quot;  &quot;)
 				elseif COPiece.count &gt; 1 and COPiece.count &lt; 100 then
 					--if we have spares to share, color it green
 					--show how many we have, with a tooltop of the piece name, and a link that searches for that piece
-					cechoLink(&quot;&lt;green&gt;&quot; .. COPiece.count,[[send(&quot;curio list all ]] .. COPieceName ..  [[&quot;,false)]],COPieceName,true)
+					cechoLink(&quot;&lt;green&gt;&quot; .. COPiece.count,[[send(&quot;curio list all ]] .. COPieceName ..  [[&quot;,false)send(&quot;CURIOMARKET SHOW BUY PIECE ]] .. COPieceName .. [[&quot;)]],COPieceName,true)
 				
 					--create some space between this entry and the next entry
 					--two digit numbers need one space
@@ -112,7 +112,7 @@ for COCollectionName,COCollection in pairs(CurioTable.Collections) do
 					--you have more than 99 of this curio somehow
 					--show that this number is too big to display
 					--still has a tooltip with the piece's name and gives a link to search for the pieces
-					cechoLink(&quot;#&quot;,[[send(&quot;curio list all ]] .. COPieceName ..  [[&quot;,false)]],COPieceName,true)
+					cechoLink(&quot;#&quot;,[[send(&quot;curio list all ]] .. COPieceName ..  [[&quot;,false)send(&quot;CURIOMARKET SHOW BUY PIECE ]] .. COPieceName .. [[&quot;)]],COPieceName,true)
 				
 					--create some space between this entry and the next entry
 					echo(&quot;  &quot;)

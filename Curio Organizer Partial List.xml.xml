@@ -16,21 +16,17 @@ if matches[5] == &quot;Complete&quot; then
 	--matches[3]
 	if COPartialSet[&quot;Rare&quot;] ~= nil and matches[3]:find(COPartialSet[&quot;Rare&quot;].name) ~= nil then
 		if COPartialSet[&quot;Rare&quot;].count == 1 then
-			cecho(&quot; &quot; .. COPartialSet[&quot;Rare&quot;].count .. &quot;   &quot;)
-			cechoLink(&quot;(&lt;yellow&gt;Sell&lt;reset&gt;)&quot;,&quot;send([[CURIO LIST PIECE &quot; .. matches[3] .. &quot;]])send([[CURIOMARKET SHOW BUY PIECE &quot; .. matches[3] .. &quot;]])&quot;,&quot;CURIOMARKET SHOW BUY PIECE &quot; .. matches[3],true)
+			cechoLink(&quot; &quot; .. COPartialSet[&quot;Rare&quot;].count,&quot;send([[CURIO LIST PIECE &quot; .. matches[3] .. &quot;]])send([[CURIOMARKET SHOW BUY PIECE &quot; .. matches[3] .. &quot;]])&quot;,&quot;CURIOMARKET SHOW BUY PIECE &quot; .. matches[3],true)
 		elseif COPartialSet[&quot;Rare&quot;].count &gt; 1 then
-			cecho(&quot; &lt;green&gt;&quot; .. COPartialSet[&quot;Rare&quot;].count .. &quot;   &quot;)
-			cechoLink(&quot;(&lt;green&gt;Sell&lt;reset&gt;)&quot;,&quot;send([[CURIO LIST PIECE &quot; .. matches[3] .. &quot;]])send([[CURIOMARKET SHOW BUY PIECE &quot; .. matches[3] .. &quot;]])&quot;,&quot;CURIOMARKET SHOW BUY PIECE &quot; .. matches[3],true)
+			cechoLink(&quot; &lt;green&gt;&quot; .. COPartialSet[&quot;Rare&quot;].count,&quot;send([[CURIO LIST PIECE &quot; .. matches[3] .. &quot;]])send([[CURIOMARKET SHOW BUY PIECE &quot; .. matches[3] .. &quot;]])&quot;,&quot;CURIOMARKET SHOW BUY PIECE &quot; .. matches[3],true)
 		end
 	else
 		for COPieceName,COPiece in pairs(COPartialSet) do
 			if matches[3]:find(COPieceName) ~= nil then
 				if COPiece.count == 1 then
-					cecho(&quot; &quot; .. COPiece.count .. &quot;   &quot;)
-					cechoLink(&quot;(&lt;yellow&gt;Sell&lt;reset&gt;)&quot;,&quot;send([[CURIO LIST PIECE &quot; .. matches[3] .. &quot;]])send([[CURIOMARKET SHOW BUY PIECE &quot; .. matches[3] .. &quot;]])&quot;,&quot;CURIOMARKET SHOW BUY PIECE &quot; .. matches[3],true)
+					cechoLink(&quot; &quot; .. COPiece.count,&quot;send([[CURIO LIST PIECE &quot; .. matches[3] .. &quot;]])send([[CURIOMARKET SHOW BUY PIECE &quot; .. matches[3] .. &quot;]])&quot;,&quot;CURIOMARKET SHOW BUY PIECE &quot; .. matches[3],true)
 				elseif COPiece.count &gt; 1 then
-					cecho(&quot; &lt;green&gt;&quot; .. COPiece.count .. &quot;   &quot;)
-					cechoLink(&quot;(&lt;green&gt;Sell&lt;reset&gt;)&quot;,&quot;send([[CURIO LIST PIECE &quot; .. matches[3] .. &quot;]])send([[CURIOMARKET SHOW BUY PIECE &quot; .. matches[3] .. &quot;]])&quot;,&quot;CURIOMARKET SHOW BUY PIECE &quot; .. matches[3],true)
+					cechoLink(&quot; &lt;green&gt;&quot; .. COPiece.count,&quot;send([[CURIO LIST PIECE &quot; .. matches[3] .. &quot;]])send([[CURIOMARKET SHOW BUY PIECE &quot; .. matches[3] .. &quot;]])&quot;,&quot;CURIOMARKET SHOW BUY PIECE &quot; .. matches[3],true)
 				end
 				return
 			end	
@@ -44,8 +40,7 @@ elseif matches[5] == &quot;Missing&quot; then
 	elseif selectString(&quot;Missing&quot;,1) &gt; -1 then
 		replace(&quot;&quot;)
 	end
-	cecho(&quot; &lt;red&gt;-   &quot;)
-   cechoLink(&quot;(&lt;red&gt;Buy&lt;reset&gt;)&quot;,&quot;send([[CURIOMARKET SHOW SELL PIECE &quot; .. matches[3] .. &quot;]])&quot;,&quot;CURIOMARKET SHOW SELL PIECE &quot; .. matches[3],true)
+   cechoLink(&quot; (&lt;red&gt;Buy&lt;reset&gt;)&quot;,&quot;send([[CURIOMARKET SHOW SELL PIECE &quot; .. matches[3] .. &quot;]])&quot;,&quot;CURIOMARKET SHOW SELL PIECE &quot; .. matches[3],true)
 end</script>
             <triggerType>0</triggerType>
             <conditonLineDelta>0</conditonLineDelta>
