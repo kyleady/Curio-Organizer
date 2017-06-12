@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MudletPackage>
+<MudletPackage version="1.0">
+    <TriggerPackage>
+        <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+            <name>Curio Organizer More</name>
+            <script>--don't show the lines asking to see more curios
+deleteLine()
+--don't show any lines asking for a prompt 
+tempLineTrigger(1,1,[[if isPrompt() then deleteLine() end]]) 
+--if it wants you to send more, send more
+if matches[1] ~= &quot;You continue reading:&quot; then
+	send(&quot;more&quot;,false)
+end</script>
+            <triggerType>0</triggerType>
+            <conditonLineDelta>0</conditonLineDelta>
+            <mStayOpen>0</mStayOpen>
+            <mCommand></mCommand>
+            <packageName></packageName>
+            <mFgColor>#ff0000</mFgColor>
+            <mBgColor>#ffff00</mBgColor>
+            <mSoundFile></mSoundFile>
+            <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            <colorTriggerBgColor>#000000</colorTriggerBgColor>
+            <regexCodeList>
+                <string>Type MORE to continue reading. (</string>
+                <string>You continue reading:</string>
+            </regexCodeList>
+            <regexCodePropertyList>
+                <integer>2</integer>
+                <integer>3</integer>
+            </regexCodePropertyList>
+        </Trigger>
+    </TriggerPackage>
+</MudletPackage>

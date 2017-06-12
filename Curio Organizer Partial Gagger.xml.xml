@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MudletPackage>
+<MudletPackage version="1.0">
+    <TriggerPackage>
+        <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+            <name>Curio Organizer Partial Gagger</name>
+            <script>--don't show the lines asking to see more curios
+deleteLine()
+--once you break apart the partial, stop this gag
+if matches[1]:find(&quot;You break apart partial &quot;) ~= nil then
+	disableTrigger(&quot;Curio Organizer Partial Gagger&quot;)
+	disableTrigger(&quot;Curio Organizer Partial List&quot;)
+elseif matches[1] == &quot;You must specify two valid curios.&quot; then
+	cecho(&quot;\n&lt;red&gt;Curio IDs are no longer valid.&quot;)
+else
+	--don't show any lines asking for a prompt 
+	tempLineTrigger(1,1,[[if isPrompt() then deleteLine() end]])
+end
+</script>
+            <triggerType>0</triggerType>
+            <conditonLineDelta>0</conditonLineDelta>
+            <mStayOpen>0</mStayOpen>
+            <mCommand></mCommand>
+            <packageName></packageName>
+            <mFgColor>#ff0000</mFgColor>
+            <mBgColor>#ffff00</mBgColor>
+            <mSoundFile></mSoundFile>
+            <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            <colorTriggerBgColor>#000000</colorTriggerBgColor>
+            <regexCodeList>
+                <string>^You examine (a|an) (.*) carefully, before carefully touching it to (a|an) (.*) curio piece of the (.*) Curio Set. A brief flash of light reveals that the two pieces have joined together, though whatever the curio is remains incomplete.$</string>
+                <string>^You break apart partial (.*) curio piece of the (.*) Curio Set.$</string>
+                <string>^(\*+)\[ PARTIAL (.*)\](\*+)$</string>
+                <string>^(\s+)ID: (\d+)(\s+)$</string>
+                <string>^(\s+)Part: (.+)(\s+)$</string>
+                <string>^(\s+)Type: (.+)(\s+)$</string>
+                <string>^(\s+)Power: (.+)(\s+)$</string>
+                <string>^(-+)$</string>
+                <string>^You cannot join together two partial sets.$</string>
+                <string>^You must specify two valid curios.$</string>
+            </regexCodeList>
+            <regexCodePropertyList>
+                <integer>1</integer>
+                <integer>1</integer>
+                <integer>1</integer>
+                <integer>1</integer>
+                <integer>1</integer>
+                <integer>1</integer>
+                <integer>1</integer>
+                <integer>1</integer>
+                <integer>1</integer>
+                <integer>1</integer>
+            </regexCodePropertyList>
+        </Trigger>
+    </TriggerPackage>
+</MudletPackage>

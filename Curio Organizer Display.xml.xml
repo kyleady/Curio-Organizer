@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MudletPackage>
+<MudletPackage version="1.0">
+    <TriggerPackage>
+        <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+            <name>Curio Organizer Display</name>
+            <script>--the data gathering has finished
+--disable the triggers that read and autosent &quot;more&quot; and the trigger that is displaying the results right now
+disableTrigger(&quot;Curio Organizer More&quot;)
+disableTrigger(&quot;Curio Organizer Spotter&quot;)
+disableTrigger(&quot;Curio Organizer Display&quot;)
+
+--make some space before you output the results
+echo(&quot;\n\n&quot;)
+for COCollectionName,COCollection in pairs(CurioTable.Collections) do
+	--display the name of the Collection and make a link to search for the collection
+	cecho(&quot;&lt;steel_blue&gt;[&quot;)
+	cechoLink(COCollectionName,[[send(&quot;curio list all ]] .. COCollectionName ..  [[&quot;,false)]],&quot;search&quot;,true)
+	cecho(&quot;&lt;steel_blue&gt;]&quot;)
+	
+	--add some extra boarder but make it even with all the other boarders
+	for i = 1,52 - COCollectionName:len() do
+			cecho(&quot;&lt;steel_blue&gt;=&quot;)
+	end
+
+	--finish this line before you output all the sets
+	echo(&quot;\n&quot;)
+	
+	--create a number of spaces equal to the size of SetLength + 3
+	for i = -2,CurioTable.SetLength do
+			echo(&quot; &quot;)
+	end
+
+	--output some indices for the pieces
+	--also indent the set
+	cecho(&quot;&lt;yellow&gt;R\n   &quot;)
+	
+	--output all the sets in this collection
+	for COSetName,COSet in pairs(COCollection) do
+		--output the name of the set with a link to search for that set
+		cechoLink(COSetName,[[send(&quot;curio list all ]] .. COSetName ..  [[&quot;,false)]],&quot;search&quot;,true)
+		
+		--always start by listing the number of rare pieces in this set
+		if COSet[&quot;Rare&quot;] ~= nil then
+			--color the output based on how many pieces we have
+			if COSet[&quot;Rare&quot;].count == 1 then
+				--if we just have one, color it the normal gray
+				--show we have one, with a tooltop of the piece name, and a link that searches for that piece
+				cechoLink(&quot;1&quot;,[[send(&quot;curio list all ]] .. COSet[&quot;Rare&quot;].name ..  [[&quot;,false)]],COSet[&quot;Rare&quot;].name,true)
+			
+				--create some space between this entry and the next entry
+				echo(&quot;  &quot;)
+			elseif COSet[&quot;Rare&quot;].count &gt; 1 and COSet[&quot;Rare&quot;].count &lt; 100 then
+				--if we have spares to share, color it green
+				--show how many we have, with a tooltop of the piece name, and a link that searches for that piece
+				cechoLink(&quot;&lt;green&gt;&quot; .. COSet[&quot;Rare&quot;].count,[[send(&quot;curio list all ]] .. COSet[&quot;Rare&quot;].name ..  [[&quot;,false)]],COSet[&quot;Rare&quot;].name,true)
+				
+				--create some space between this entry and the next entry
+				--two digit numbers need one space
+				--one digit numbes need two spaces
+				if COSet[&quot;Rare&quot;].count &gt;= 10 then
+					echo(&quot; &quot;)
+				else
+					echo(&quot;  &quot;)
+				end
+			else
+				--you have more than 99 of this curio somehow
+				--show that this number is too big to display
+				--still has a tooltip with the piece's name and gives a link to search for the pieces
+				cechoLink(&quot;#&quot;,[[send(&quot;curio list all ]] .. COSet[&quot;Rare&quot;].name ..  [[&quot;,false)]],COSet[&quot;Rare&quot;].name,true)
+				
+				--create some space between this entry and the next entry
+				echo(&quot;  &quot;)
+			end	
+		else
+			--You do not have the rare piece. Put a red mark here with no link or tooltip
+			cecho(&quot;&lt;red&gt;-  &quot;)
+		end
+
+		--get ready to count how many types of regular pieces we are missing in this set
+		COMissingCount = 9
+
+		--output all the regular pieces in this set
+		for COPieceName,COPiece in pairs(COSet) do
+			--We have already seen the Rare Piece. Don't show the Rare.
+			if COPieceName ~= &quot;Rare&quot; then
+				--we have at least one of this piece. We are not missing this one.
+				COMissingCount = COMissingCount - 1
+
+				--color the output based on how many pieces we have
+				if COPiece.count == 1 then
+					--if we just have one, color it the normal gray
+					--show we have one, with a tooltop of the piece name, and a link that searches for that piece
+					cechoLink(&quot;1&quot;,[[send(&quot;curio list all ]] .. COPieceName ..  [[&quot;,false)]],COPieceName,true)
+				
+					--create some space between this entry and the next entry
+					echo(&quot;  &quot;)
+				elseif COPiece.count &gt; 1 and COPiece.count &lt; 100 then
+					--if we have spares to share, color it green
+					--show how many we have, with a tooltop of the piece name, and a link that searches for that piece
+					cechoLink(&quot;&lt;green&gt;&quot; .. COPiece.count,[[send(&quot;curio list all ]] .. COPieceName ..  [[&quot;,false)]],COPieceName,true)
+				
+					--create some space between this entry and the next entry
+					--two digit numbers need one space
+					--one digit numbes need two spaces
+					if COPiece.count &gt;= 10 then
+						echo(&quot; &quot;)
+					else
+						echo(&quot;  &quot;)
+					end
+				else
+					--you have more than 99 of this curio somehow
+					--show that this number is too big to display
+					--still has a tooltip with the piece's name and gives a link to search for the pieces
+					cechoLink(&quot;#&quot;,[[send(&quot;curio list all ]] .. COPieceName ..  [[&quot;,false)]],COPieceName,true)
+				
+					--create some space between this entry and the next entry
+					echo(&quot;  &quot;)
+				end	
+			end
+		end
+
+		--note all the pices that you don't have yet
+		--there are no tooltips or links to work with as we don't know what the pieces should be
+		for i = 1,COMissingCount do
+			cecho(&quot;&lt;red&gt;-  &quot;)
+		end
+
+		--check if you have every piece
+		if COMissingCount == 0 and COSet[&quot;Rare&quot;] ~= nil then
+			--create a series of commands to build the curio
+			COBuildMeCommands = &quot;&quot;
+			--attach each piece to the rare
+			for COPieceName,COPiece in pairs(COSet) do
+				COBuildMeCommands = COBuildMeCommands .. [[send(&quot;curio attach ]] .. COSet[&quot;Rare&quot;].id .. &quot; to &quot; .. COPiece.id .. [[&quot;,false) ]]
+			end
+			--display a message that shows the curio is ready
+			--it contains a link to build the curio and the tooltip informs the user what this will do
+			cechoLink(&quot;&lt;yellow&gt;Build Me!&quot;,COBuildMeCommands,&quot;Instantly constructs the curio.&quot;,true)
+		--check if you have at least two pieces
+		elseif COMissingCount &lt; 8 or (COMissingCount &lt; 9 and COSet[&quot;Rare&quot;] ~= nil) then
+			--create a series of commands to see what pieces are missing
+			--start off by preparing to gag the commands you are about to do
+			COBuildMeCommands = [[COPartialSet = CurioTable.Collections[&quot;]] .. COCollectionName .. [[&quot;][&quot;]] .. COSetName .. [[&quot;] enableTrigger(&quot;Curio Organizer Partial Gagger&quot;) enableTrigger(&quot;Curio Organizer Partial List&quot;) ]]
+			--reset the curio starting point
+			COStartingPoint = nil
+			--can we use the rare as the starting point?
+			if COSet[&quot;Rare&quot;] ~= nil then
+				COStartingPoint = COSet[&quot;Rare&quot;].id
+			end
+			--attach each piece to the starting point OR designate a starting point if you don't have one yet
+			for COPieceName,COPiece in pairs(COSet) do
+				--do we still need to setup the curio starting point?
+				if COStartingPoint == nil then
+					COStartingPoint = COPiece.id
+				else
+					--we already have a starting point, attach this curio to the starting point
+					COBuildMeCommands = COBuildMeCommands .. [[send(&quot;curio attach ]] .. COStartingPoint .. &quot; to &quot; .. COPiece.id .. [[&quot;,false) ]]
+				end
+			end
+			--Examine the Partial, then take it apart
+			COBuildMeCommands = COBuildMeCommands .. [[send(&quot;CURIO SHOW PIECE ]] .. COStartingPoint .. [[&quot;,false) send(&quot;CURIO BREAK ]] .. COStartingPoint .. [[&quot;,false)]]
+			--display a message that shows the curio is ready
+			--it contains a link to build the curio and the tooltip informs the user what this will do
+			cechoLink(&quot;(&lt;blue&gt;Missing?&lt;reset&gt;)&quot;,COBuildMeCommands,&quot;Uses a partial to find the missing pieces.&quot;,true)
+		end
+
+		--put a line between each curio set and indent the curio set
+		echo(&quot;\n\n   &quot;)
+
+	end
+		--put a line beteen each collection
+	echo(&quot;\n&quot;)
+end</script>
+            <triggerType>0</triggerType>
+            <conditonLineDelta>0</conditonLineDelta>
+            <mStayOpen>0</mStayOpen>
+            <mCommand></mCommand>
+            <packageName></packageName>
+            <mFgColor>#ff0000</mFgColor>
+            <mBgColor>#ffff00</mBgColor>
+            <mSoundFile></mSoundFile>
+            <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            <colorTriggerBgColor>#000000</colorTriggerBgColor>
+            <regexCodeList>
+                <string>Total Curios: </string>
+            </regexCodeList>
+            <regexCodePropertyList>
+                <integer>2</integer>
+            </regexCodePropertyList>
+        </Trigger>
+    </TriggerPackage>
+</MudletPackage>

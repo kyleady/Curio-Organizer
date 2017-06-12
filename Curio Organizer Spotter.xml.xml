@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MudletPackage>
+<MudletPackage version="1.0">
+    <TriggerPackage>
+        <Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+            <name>Curio Organizer Spotter</name>
+            <script>--matches[1] ~ the full line
+--matches[2] ~ the curio id
+--matches[3] ~ the white space between the curio id and the curio type
+--matches[4] ~ the curio type, but only if it is a Rare or a Piece
+--matches[5] ~ the white space after the curio type and before the curio set
+--matches[6] ~ contains the curio Set, Collection, and Description
+--matches[7] ~ constains whether you want Lusternia to rub the piece or not
+
+--hide this line
+deleteLine()
+
+--start by dicing up matches[6] into the Set, Collection, and Description (the size of each piece can be set in Curio Organizer Start)
+CurioTable.Set = string.sub(matches[6],1,CurioTable.SetLength)
+CurioTable.Collection = string.sub(matches[6],CurioTable.SetLength+1,CurioTable.SetLength + CurioTable.CollectionLength)
+CurioTable.Description = string.sub(matches[6],CurioTable.SetLength + CurioTable.CollectionLength+1)
+
+--trim down each piece, removing outside spaces
+--CurioTable.Set = CurioTable.Set:match &quot;^%s*(.-)%s*$&quot;
+CurioTable.Collection = CurioTable.Collection:match &quot;^%s*(.-)%s*$&quot;
+CurioTable.Description = CurioTable.Description:match &quot;^%s*(.-)%s*$&quot;
+
+--start with the Collection. Be sure the Collection exists
+if CurioTable.Collections[CurioTable.Collection] == nil then
+	--the collection did not exist yet. Create a table for this Collection
+	CurioTable.Collections[CurioTable.Collection] = {}
+end
+
+--next, be sure this Set exists
+if CurioTable.Collections[CurioTable.Collection][CurioTable.Set] == nil then
+	--the Set within this Collection did not exist yet. Create a table for this Set
+	CurioTable.Collections[CurioTable.Collection][CurioTable.Set] = {}
+end
+
+--is this piece a Rare?
+if matches[4] == &quot;Rare&quot; then
+	--check to see if this Rare existed yet
+	if CurioTable.Collections[CurioTable.Collection][CurioTable.Set][&quot;Rare&quot;] == nil then
+		--the Rare within this Set did not exist yet. Create a table for this Rare
+		CurioTable.Collections[CurioTable.Collection][CurioTable.Set][&quot;Rare&quot;] = {}
+		--note down the description of the Rare
+		CurioTable.Collections[CurioTable.Collection][CurioTable.Set][&quot;Rare&quot;].name = CurioTable.Description
+   		--note down the id of the first found Rare in this set
+		CurioTable.Collections[CurioTable.Collection][CurioTable.Set][&quot;Rare&quot;].id = matches[2]
+		--note down that we just found one of this Rare
+		CurioTable.Collections[CurioTable.Collection][CurioTable.Set][&quot;Rare&quot;].count = 1
+	else
+		--note that we found one more curio of this description
+		CurioTable.Collections[CurioTable.Collection][CurioTable.Set][&quot;Rare&quot;].count = CurioTable.Collections[CurioTable.Collection][CurioTable.Set][&quot;Rare&quot;].count + 1
+	end
+else
+	--check to see if this piece existed yet
+	if CurioTable.Collections[CurioTable.Collection][CurioTable.Set][CurioTable.Description] == nil then
+		--the piece within this set did not exist yet. Create a table for this piece.
+		CurioTable.Collections[CurioTable.Collection][CurioTable.Set][CurioTable.Description] = {}
+   		--note down the id of the first found curio with this description
+		CurioTable.Collections[CurioTable.Collection][CurioTable.Set][CurioTable.Description].id = matches[2]
+		--note down that we just found one of this curio
+		CurioTable.Collections[CurioTable.Collection][CurioTable.Set][CurioTable.Description].count = 1
+	else
+		--note that we found one more curio of this description
+		CurioTable.Collections[CurioTable.Collection][CurioTable.Set][CurioTable.Description].count = CurioTable.Collections[CurioTable.Collection][CurioTable.Set][CurioTable.Description].count + 1
+	end
+end</script>
+            <triggerType>0</triggerType>
+            <conditonLineDelta>0</conditonLineDelta>
+            <mStayOpen>0</mStayOpen>
+            <mCommand></mCommand>
+            <packageName></packageName>
+            <mFgColor>#ff0000</mFgColor>
+            <mBgColor>#ffff00</mBgColor>
+            <mSoundFile></mSoundFile>
+            <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            <colorTriggerBgColor>#000000</colorTriggerBgColor>
+            <regexCodeList>
+                <string>^(\d+)(\s+)(Rare|Piece)(\s+)(.+)\s*(Yes|No)\s*$</string>
+            </regexCodeList>
+            <regexCodePropertyList>
+                <integer>1</integer>
+            </regexCodePropertyList>
+        </Trigger>
+    </TriggerPackage>
+</MudletPackage>

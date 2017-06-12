@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MudletPackage>
+<MudletPackage version="1.0">
+    <TriggerPackage>
+        <Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+            <name>Curio Organizer Start</name>
+            <script>--create a table to organize all your curios
+CurioTable = {}
+CurioTable.Collections = {}
+--these are adjustable values as your curio output may not be the same inside Lusternia
+--this is the number of characters from the beginning of Set to the beginning of Collection
+CurioTable.SetLength = 21
+--this is the number of characters from the beginning of Collection to the beginning of Description
+CurioTable.CollectionLength = 13
+
+--enable the triggers that will read, autosend &quot;more&quot;, and output the results
+enableTrigger(&quot;Curio Organizer More&quot;)
+enableTrigger(&quot;Curio Organizer Spotter&quot;)
+enableTrigger(&quot;Curio Organizer Display&quot;)
+</script>
+            <triggerType>0</triggerType>
+            <conditonLineDelta>0</conditonLineDelta>
+            <mStayOpen>0</mStayOpen>
+            <mCommand></mCommand>
+            <packageName></packageName>
+            <mFgColor>#ff0000</mFgColor>
+            <mBgColor>#ffff00</mBgColor>
+            <mSoundFile></mSoundFile>
+            <colorTriggerFgColor>#000000</colorTriggerFgColor>
+            <colorTriggerBgColor>#000000</colorTriggerBgColor>
+            <regexCodeList>
+                <string>^(\*+)\[ Curio Pieces \](\*+)$</string>
+            </regexCodeList>
+            <regexCodePropertyList>
+                <integer>1</integer>
+            </regexCodePropertyList>
+        </Trigger>
+    </TriggerPackage>
+</MudletPackage>
